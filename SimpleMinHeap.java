@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class SimpleMinHeap<T extends Comparable<T>> {
 
-    List<T> arr = new ArrayList<>();
+    final List<T> arr = new ArrayList<>();
 
     void add(T newElement) {
         if (arr.isEmpty()) {
@@ -43,27 +43,24 @@ public class SimpleMinHeap<T extends Comparable<T>> {
         if (arr.isEmpty()) {
             throw new EmptyStackException();
         }
-        if (arr.size() == 1) {
-            return arr.remove(0);
-        }
-        if (arr.size() == 2) {
-            return arr.remove(0);
+        if (arr.size() == 1 || arr.size() == 2) {
+            return arr.removeFirst();
         }
         if (arr.size() == 3) {
             if (arr.get(1).compareTo(arr.get(2)) < 0) {
-                return arr.remove(0);
+                return arr.removeFirst();
             }
             Collections.swap(arr, 1, 2);
-            return arr.remove(0);
+            return arr.removeFirst();
         }
 
-        final T lastElement = arr.remove(arr.size() - 1);
-        final T firstElement = arr.get(0);
+        final T lastElement = arr.removeLast();
+        final T firstElement = arr.getFirst();
 
         arr.set(0, lastElement);
         T leftChild = arr.get(1);
         T rightChild = arr.get(2);
-        T currentElemet = arr.get(0);
+        T currentElemet = arr.getFirst();
         int index = 0;
         while (true) {
             if ((leftChild != null && currentElemet.compareTo(leftChild) > 0)) {
